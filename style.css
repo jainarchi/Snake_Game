@@ -9,6 +9,7 @@
    --primary-color: rgb(33, 33, 33) ;
    --font-color : rgb(222, 219, 219);
    --grid-color : rgb(45, 44, 44);
+
 }
 
 html{
@@ -30,9 +31,9 @@ main{
 }
 
 #s1{
- 
   display: flex;
   justify-content: space-between;
+  padding: 0.7rem;
 
 }
 #s1 div{
@@ -46,9 +47,18 @@ main{
     flex-grow: 1;
     border: 1px solid blue;
     display: grid;
-    /* grid-template-rows: repeat(autofill , 30px) ;
-    grid-template-columns: repeat(autofill , 30px) ;  */
+    grid-template-rows: repeat(auto-fill  , minmax(80px, 1fr)) ;
+    grid-template-columns: repeat(auto-fill , minmax(80px, 1fr)) ; 
 }
+
+
+.cell{
+    height: 80px;
+    width: 80px;
+    border: 1px solid rgb(118, 116, 116);
+}
+
+
 
 
 
