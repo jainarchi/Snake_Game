@@ -9,6 +9,16 @@
    --primary-color: rgb(33, 33, 33) ;
    --font-color : rgb(222, 219, 219);
    --grid-color : rgb(45, 44, 44);
+   --bg-fill-color : rgb(224, 220, 220) ;
+
+
+   --space-xs : 4px ;
+   --space-sm : 8px ;
+   --space-md : 16px ;
+   --space-lg : 24px ;
+   --space-xl : 32px ;
+
+   
 
 }
 
@@ -58,6 +68,9 @@ main{
     border: 1px solid rgb(118, 116, 116);
 }
 
+.fill{
+    background: var(--bg-fill-color);
+}
 
 
 
