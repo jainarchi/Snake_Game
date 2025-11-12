@@ -51,8 +51,8 @@ function run (){
     let obj = snake.pop();
     blocks[`${obj.x}-${obj.y}`].classList.remove("fill")
     
-    
    render()
+   
  } , 400);
 }
 
