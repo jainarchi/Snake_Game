@@ -10,7 +10,7 @@
    --font-color : rgb(222, 219, 219);
    --grid-color : rgb(45, 44, 44);
    --bg-fill-color : rgb(224, 220, 220) ;
-
+   --food-color : rgb(255, 255, 32) ;
 
    --space-xs : 4px ;
    --space-sm : 8px ;
@@ -18,7 +18,6 @@
    --space-lg : 24px ;
    --space-xl : 32px ;
 
-   
 
 }
 
@@ -33,6 +32,39 @@ body , main{
     width: 100vw;
     
 }
+.startGame , .overGame{
+    height: 100%;
+    width: 100% ;
+    position: fixed;
+    top: 0;
+    background: #161616a8;
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-lg);
+
+    
+}
+.overGame{
+   display: none;
+}
+
+.btn{
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--space-xs);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+.btn:hover{
+   scale: 1.1;
+}
+
+.startGame .btn{
+    background: rgb(113, 197, 113);
+}
+
 
 main{
     display: flex;
@@ -70,6 +102,10 @@ main{
 
 .fill{
     background: var(--bg-fill-color);
+}
+
+.food{
+    background-color: var(--food-color);
 }
 
 
