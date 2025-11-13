@@ -4,11 +4,22 @@ let startGame = document.querySelector(".startGame")
 let overGame = document.querySelector(".overGame")
 let restartBtn = document.querySelector(".restartBtn")
 
+let showScore = document.getElementById("score")
+let showHighScore = document.getElementById("highScore")
+let showTime = document.getElementById("time") 
+
+
+let highScore = parseInt(localStorage.getItem('highScore')) || 0;
+let score = 0 ;
+let time = `00-00`;
+
+
 let cellWidth = 80;
 let cellHeight = 80;
 let row = Math.floor(board.clientHeight / cellHeight);
 let col = Math.floor(board.clientWidth / cellWidth);
 
+let timeInterval = null ;
 let interval = null;
 let food = null;
 
@@ -19,7 +30,6 @@ for (let i = 0; i < row; i++) {
   for (let j = 0; j < col; j++) {
     let cell = document.createElement("div");
     cell.classList.add("cell");
-    // cell.textContent = `${i}  ${j}`;
     board.appendChild(cell);
     blocks[`${i}-${j}`] = cell;
   }
@@ -65,6 +75,17 @@ function run() {
         blocks[`${food.x}-${food.y}`].classList.remove("food");
         randomFood();
         snake.unshift(head);
+
+        score += 10 ;
+        showScore.textContent = score ;
+
+        if(highScore < score){
+            highScore = score
+            showHighScore.textContent = highScore ;
+
+            localStorage.setItem('highScore' ,  highScore)
+        }
+        
       }
 
       snake.unshift(head);
@@ -81,22 +102,41 @@ function run() {
 
 startBtn.addEventListener("click" , () =>{
     startGame.style.display = "none"
-})
+
+    showHighScore.textContent = highScore ;
+     
+    timeInterval = setInterval(()=>{
+          let [min , sec] = time.split("-").map(Number);
+           
+          if(sec === 59){
+            min += 1 ;
+            sec = 0 ;
+          }
+          else {
+            sec += 1
+          }
+          
+          time = `${min}-${sec}`
+          showTime.textContent = time ; 
+    } , 1000)
+
+   
+  }) 
 
 
 
 let dir = "null";
+randomFood();            // for intial food
+render();                // for intial snake
 
-randomFood(); // for intial food
-render();  // for intial snake
+
 
 addEventListener("keydown", (e) => {
   dir = e.key;
-  if(interval === null){  // otherwise interval already set
+  if(interval === null){            // otherwise interval already set
      run();
   }
               
- 
 });
 
 
@@ -118,5 +158,8 @@ restartBtn.addEventListener("click" , () =>{
      snake = [{ x: 1, y: 3 }]
      render()
      randomFood();
+     score = 0 ;
+     showScore.textContent = score ;
+
      
 })
