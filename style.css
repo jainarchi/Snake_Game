@@ -45,7 +45,9 @@ body , main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     gap: var(--space-lg);
+    padding: var(--space-sm);
 
     
 }
@@ -71,34 +73,36 @@ body , main{
 main{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-xl);
+    padding: var(--space-xs);
+    
+    
 }
 
 #s1{
   display: flex;
   justify-content: space-between;
-  padding: 0.7rem;
-
+  padding-top: var(--space-xs) ;
+  
 }
 #s1 div{
  padding: 16px;
- border: 1px solid blue;
- border-radius: 0.5rem;
+ background: #2b2a2af0;
+ border-radius: var(--space-sm);
     
 }
 
 #s2{
     flex-grow: 1;
-    border: 1px solid blue;
     display: grid;
-    grid-template-rows: repeat(auto-fill  , minmax(80px, 1fr)) ;
-    grid-template-columns: repeat(auto-fill , minmax(80px, 1fr)) ; 
+    grid-template-rows: repeat(auto-fill  , 80px );
+    grid-template-columns: repeat(auto-fill , 80px) ; 
 }
 
 
 .cell{
     height: 80px;
-    width: 80px;
+    width:80px;
     border: 1px solid rgb(57, 55, 55);
     border-radius: 50%;
 }
@@ -117,6 +121,22 @@ main{
     
 }
 
+
+
+
+@media (max-width: 650px) {
+ 
+.cell{
+    height: 60px;
+    width: 60px;
+}
+
+#s2{
+    grid-template-rows: repeat(auto-fill  , 60px );
+    grid-template-columns: repeat(auto-fill , 60px) ; 
+}
+
+}
 
 
 
