@@ -8,7 +8,7 @@ let gameBtns = document.querySelectorAll('#game-btn button')
 let timeInterval = null;
 let interval = null;
 let food = null;
-let dir = "null";  
+let dir = "null";
 
 let showScore = document.getElementById("score");
 let showHighScore = document.getElementById("highScore");
@@ -20,7 +20,7 @@ let time = `00-00`;
 
 let cellWidth = 80;
 let cellHeight = 80;
-let row = 0 ;
+let row = 0;
 let col = 0;
 
 let mediaQuery = window.matchMedia("(max-width: 650px)");
@@ -34,8 +34,8 @@ function updateCellDimensions(mql) {
     cellHeight = 80;
   }
 
-   row = Math.floor(board.clientHeight / cellHeight);
-   col = Math.floor(board.clientWidth / cellWidth);
+  row = Math.floor(board.clientHeight / cellHeight);
+  col = Math.floor(board.clientWidth / cellWidth);
 
   console.log(`Dimensions: ${cellWidth}x${cellHeight}. Grid: ${row}x${col}`
   );
@@ -107,14 +107,20 @@ function run() {
           localStorage.setItem("highScore", highScore);
         }
       }
-
+    
+      
       snake.unshift(head);
-      blocks[`${head.x}-${head.y}`].classList.add("fill");
 
+      if (head.x >= 0 && head.x < row && head.y >= 0 && head.y < col){
+      blocks[`${head.x}-${head.y}`].classList.add("fill");
+      
+      render();
       let obj = snake.pop();
       blocks[`${obj.x}-${obj.y}`].classList.remove("fill");
 
-      render();
+      }
+      
+     
     }
   }, 400);
 }
@@ -146,26 +152,25 @@ startBtn.addEventListener("click", () => {
 });
 
 
-   
+function setDirection(inputDir) {
 
-addEventListener("keydown", (e) => {
-  dir = e.key;
-  if (interval === null) {          // otherwise interval already set
-    run();
+  let validDir = ['ArrowRight', 'ArrowDown', 'ArrowUp', 'ArrowLeft']
+
+  if (validDir.includes(inputDir)) {
+    dir = inputDir
+
+    if (interval === null) {   // otherwise dir already set
+      run();
+    }
   }
-});
+}
 
 
+addEventListener("keydown", (e) => { setDirection(e.key) });
 
-gameBtns.forEach((btn) =>{
-    btn.addEventListener("click" , () => {
-        dir = btn.id
-        if(interval === null){
-          run();
-        }
-            
-         
-    })
+
+gameBtns.forEach((btn) => {
+  btn.addEventListener("click", () => { setDirection(btn.id) })
 })
 
 
@@ -177,7 +182,7 @@ restartBtn.addEventListener("click", () => {
   snake.shift();
 
   snake.forEach((obj) => {
-    console.log(obj);
+    // console.log(obj);
     blocks[`${obj.x}-${obj.y}`].classList.remove("fill");
   });
   blocks[`${food.x}-${food.y}`].classList.remove("food");
