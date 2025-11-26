@@ -73,9 +73,8 @@ body , main{
 main{
     display: flex;
     flex-direction: column;
-    gap: var(--space-xl);
+    gap: var(--space-md);
     padding: var(--space-xs);
-    
     
 }
 
@@ -97,6 +96,8 @@ main{
     display: grid;
     grid-template-rows: repeat(auto-fill  , 80px );
     grid-template-columns: repeat(auto-fill , 80px) ; 
+
+    
 }
 
 
@@ -119,6 +120,30 @@ main{
 .overGame h1{
     color: var(--red-btn);
     
+}
+
+
+
+#game-btn{
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+#game-btn button{
+    padding: 10px 12px;
+    background-color: #333;
+    border: 1px solid #333;
+    
+    
+}
+#game-btn button:active{
+    background-color: #444;
+    border: 1px solid rgb(159, 158, 158);
+}
+#game-btn i{
+    color: white;
+    font-size: 30px;
 }
 
 

@@ -3,6 +3,7 @@ let startBtn = document.querySelector(".startBtn");
 let startGame = document.querySelector(".startGame");
 let overGame = document.querySelector(".overGame");
 let restartBtn = document.querySelector(".restartBtn");
+let gameBtns = document.querySelectorAll('#game-btn button')
 
 let timeInterval = null;
 let interval = null;
@@ -153,6 +154,20 @@ addEventListener("keydown", (e) => {
     run();
   }
 });
+
+
+
+gameBtns.forEach((btn) =>{
+    btn.addEventListener("click" , () => {
+        dir = btn.id
+        if(interval === null){
+          run();
+        }
+            
+         
+    })
+})
+
 
 
 
