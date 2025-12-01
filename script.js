@@ -57,7 +57,6 @@ for (let i = 0; i < row; i++) {
 }
 
 
-
 function randomFood() {
   food = {
     x: Math.floor(Math.random() * row),
@@ -75,53 +74,51 @@ function render() {
 
 function run() {
   interval = setInterval(() => {
-    let head = snake[0];
 
-    if (head.x < 0 || head.x === row || head.y < 0 || head.y === col) {
-      overGame.style.display = "flex";
-      clearInterval(interval);
-      return;
-    } else {
-      if (dir === "ArrowRight") {
-        head = { x: snake[0].x, y: snake[0].y + 1 };
-      } else if (dir === "ArrowLeft") {
-        head = { x: snake[0].x, y: snake[0].y - 1 };
-      } else if (dir === "ArrowUp") {
-        head = { x: snake[0].x - 1, y: snake[0].y };
-      } else if (dir === "ArrowDown") {
-        head = { x: snake[0].x + 1, y: snake[0].y };
+    let newHead = {...snake[0]};
+    if(dir === "ArrowRight") newHead.y +=1 ;
+    else if (dir === "ArrowLeft") newHead.y -=1;
+    else if (dir === "ArrowUp") newHead.x -= 1;
+    else if (dir === "ArrowDown") newHead.x +=1 ;
+
+    if(newHead.x < 0 || newHead.x >= row ||
+      newHead.y < 0 || newHead.y >= col  || 
+      snake.some((obj , idx) => obj.x === newHead.x && obj.y === newHead.y )){
+
+        overGame.style.display = "flex";
+        clearInterval(interval);
+        return;    
       }
-
-      if (head.x === food.x && head.y === food.y) {
-        blocks[`${food.x}-${food.y}`].classList.remove("food");
-        randomFood();
-        snake.unshift(head);
-
-        score += 10;
-        showScore.textContent = score;
-
-        if (highScore < score) {
-          highScore = score;
-          showHighScore.textContent = highScore;
-
-          localStorage.setItem("highScore", highScore);
-        }
-      }
+        
+      snake.unshift(newHead);
+      blocks[`${newHead.x}-${newHead.y}`].classList.add("fill");
     
       
-      snake.unshift(head);
+     if(newHead.x === food.x && newHead.y === food.y){
+      blocks[`${food.x}-${food.y}`].classList.remove("food");
+      randomFood();
 
-      if (head.x >= 0 && head.x < row && head.y >= 0 && head.y < col){
-      blocks[`${head.x}-${head.y}`].classList.add("fill");
       
-      render();
-      let obj = snake.pop();
-      blocks[`${obj.x}-${obj.y}`].classList.remove("fill");
+      // snake.unshift(newHead);
+      score += 10 ;
+      showScore.textContent = score;
 
+      if(highScore < score){
+        highScore = score ;
+        showHighScore.textContent = highScore ;
+
+        localStorage.setItem("highScore" , highScore);
       }
-      
-     
     }
+     else {
+      let tail = snake.pop();
+      blocks[`${tail.x}-${tail.y}`].classList.remove("fill");
+      
+     }
+      
+    
+      
+    
   }, 400);
 }
 
@@ -129,9 +126,11 @@ function run() {
 // start
 
 startBtn.addEventListener("click", () => {
-  startGame.style.display = "none";
 
+  startGame.style.display = "none";
   showHighScore.textContent = highScore;
+
+  clearInterval(timeInterval)
 
   timeInterval = setInterval(() => {
     let [min, sec] = time.split("-").map(Number);
@@ -142,7 +141,9 @@ startBtn.addEventListener("click", () => {
     } else {
       sec += 1;
     }
-
+    
+    min = (min < 10) ? '0' + min : min
+    sec = (sec < 10 )? '0' + sec : sec
     time = `${min}-${sec}`;
     showTime.textContent = time;
   }, 1000);
@@ -153,7 +154,6 @@ startBtn.addEventListener("click", () => {
 
 
 function setDirection(inputDir) {
-
   let validDir = ['ArrowRight', 'ArrowDown', 'ArrowUp', 'ArrowLeft']
 
   if (validDir.includes(inputDir)) {
@@ -179,20 +179,24 @@ gameBtns.forEach((btn) => {
 restartBtn.addEventListener("click", () => {
   overGame.style.display = "none";
 
-  snake.shift();
-
   snake.forEach((obj) => {
-    // console.log(obj);
     blocks[`${obj.x}-${obj.y}`].classList.remove("fill");
   });
   blocks[`${food.x}-${food.y}`].classList.remove("food");
 
   dir = "null";
   interval = null;
-
-  snake = [{ x: 1, y: 3 }];
-  render();
-  randomFood();
+  clearInterval(timeInterval)
   score = 0;
+  time = `00-00`
+  snake = [{ x: 1, y: 3 }];
+ 
+
   showScore.textContent = score;
+  showTime.textContent = `00-00`
+
+ 
+  startBtn.click()
+
+
 });
